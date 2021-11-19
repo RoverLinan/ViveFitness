@@ -3,7 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_sem09/models/usuario.dart';
 import 'package:flutter_sem09/pages/home_page.dart';
+import 'package:flutter_sem09/servicios/usuario_servicio.dart';
 import 'package:http/http.dart' as http;
 
 /// This is the stateful widget that the main application instantiates.
@@ -18,6 +20,8 @@ class MyStatefulWidgetLogin extends StatefulWidget {
 class _LoginPage extends State<MyStatefulWidgetLogin> {
   TextEditingController inputCorreo = TextEditingController();
   TextEditingController inputPassword = TextEditingController();
+  UsuarioService usuarioService = UsuarioService();
+  late Usuario usuario;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +170,8 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return RaisedButton(
         color: Colors.green,
-        onPressed: _login,
+        onPressed: () =>
+            {usuarioService.login(context, usuario), print("maloooooooooss")},
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: const Text(
@@ -179,6 +184,7 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
     });
   }
 
+  /*
   Future _login() async {
     /*
     final response = await http.post(
@@ -191,8 +197,10 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
       print("Hola");
     } else {
       print(user.toString());
-      */
+    } */
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const MyStatefulWidget()));
   }
+  */
+
 }

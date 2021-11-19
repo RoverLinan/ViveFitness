@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sem09/models/usuario.dart';
 import 'package:flutter_sem09/pages/home_page.dart';
+import 'package:flutter_sem09/servicios/usuario_servicio.dart';
 
 class Login extends StatelessWidget {
+  TextEditingController inputCorreo = TextEditingController();
+  TextEditingController inputPassword = TextEditingController();
+  UsuarioService usuarioService = UsuarioService();
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
@@ -39,6 +45,7 @@ class Login extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                         child: TextField(
+                          controller: inputCorreo,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
@@ -64,6 +71,7 @@ class Login extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                         color: Colors.transparent,
                         child: TextField(
+                          controller: inputPassword,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
@@ -88,9 +96,9 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MyStatefulWidget()));
+                        onPressed: () => {
+                          usuarioService.login(context,
+                              Usuario(inputCorreo.text, inputPassword.text))
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black,
