@@ -35,4 +35,25 @@ class UsuarioService {
       print(e.toString());
     }
   }
+
+  Future cargarDatosUsuario(BuildContext context, TextEditingController nombre,
+      TextEditingController correo) async {
+    final response;
+
+    try {
+      response = await http.get(Uri.parse(
+          UtilityAPI.API_URL + "usuarios/" + SesionSingleton().id.toString()));
+
+      Map<String, dynamic> user = json.decode(response.body);
+
+      if (user.isEmpty) {
+        print("Hola");
+      } else {
+        print(user['correo']);
+        nombre.text = user['correo'];
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

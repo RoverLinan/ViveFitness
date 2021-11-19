@@ -9,6 +9,7 @@ import 'package:flutter_sem09/components/mis_publicaciones_page.dart';
 import 'package:flutter_sem09/components/objetivo_semanal.dart';
 import 'package:flutter_sem09/components/perfil_page.dart';
 import 'package:flutter_sem09/pages/dietas_page.dart';
+import 'package:flutter_sem09/servicios/usuario_servicio.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
@@ -25,9 +26,14 @@ class HomePage extends State<MyStatefulWidget> {
   ];
 
   static int _indexOptions = 0;
+  static TextEditingController nombre = TextEditingController();
+  static TextEditingController correo = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    UsuarioService usuarioService = UsuarioService();
+    usuarioService.cargarDatosUsuario(context, nombre, correo);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('¡Estamos para ayudarte!'),
@@ -44,7 +50,7 @@ class HomePage extends State<MyStatefulWidget> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Text('Hola, Roger',
+                child: Text('Hola, ' + nombre.text,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,
