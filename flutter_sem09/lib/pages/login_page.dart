@@ -20,6 +20,8 @@ class MyStatefulWidgetLogin extends StatefulWidget {
 class _LoginPage extends State<MyStatefulWidgetLogin> {
   TextEditingController inputCorreo = TextEditingController();
   TextEditingController inputPassword = TextEditingController();
+  TextEditingController inputEdad = TextEditingController();
+  TextEditingController inputNombre = TextEditingController();
   UsuarioService usuarioService = UsuarioService();
   late Usuario usuario;
 
@@ -47,12 +49,9 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
         height: 70.0,
       ),
       _inputNombre(),
-      _inputApellido(),
       _inputCorreo(),
       _inputPassword(),
       _inputEdad(),
-      _inputPeso(),
-      _inputTalla(),
       Padding(
         padding: const EdgeInsets.all(25.0),
         child: _buttonLogin(),
@@ -66,25 +65,10 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: TextField(
-          controller: inputCorreo,
-          keyboardType: TextInputType.emailAddress,
+          controller: inputNombre,
+          keyboardType: TextInputType.name,
           decoration: const InputDecoration(
               icon: Icon(Icons.email), labelText: "Nombre"),
-        ),
-      );
-    });
-  }
-
-  Widget _inputApellido() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: TextField(
-          controller: inputCorreo,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-              icon: Icon(Icons.email), labelText: "Apellidos"),
         ),
       );
     });
@@ -111,38 +95,8 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: TextField(
-          controller: inputCorreo,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-              icon: Icon(Icons.email), labelText: "Password"),
-        ),
-      );
-    });
-  }
-
-  Widget _inputPeso() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: TextField(
-          controller: inputCorreo,
-          keyboardType: TextInputType.emailAddress,
-          decoration:
-              const InputDecoration(icon: Icon(Icons.email), labelText: "Peso"),
-        ),
-      );
-    });
-  }
-
-  Widget _inputTalla() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: TextField(
-          controller: inputCorreo,
-          keyboardType: TextInputType.emailAddress,
+          controller: inputEdad,
+          keyboardType: TextInputType.number,
           decoration:
               const InputDecoration(icon: Icon(Icons.email), labelText: "Edad"),
         ),
@@ -157,9 +111,9 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: TextField(
           controller: inputPassword,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.visiblePassword,
           decoration: const InputDecoration(
-              icon: Icon(Icons.password), labelText: "Talla"),
+              icon: Icon(Icons.password), labelText: "Password"),
         ),
       );
     });
@@ -170,8 +124,7 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return RaisedButton(
         color: Colors.green,
-        onPressed: () =>
-            {usuarioService.login(context, usuario), print("maloooooooooss")},
+        onPressed: () => {registrar()},
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: const Text(
@@ -203,4 +156,16 @@ class _LoginPage extends State<MyStatefulWidgetLogin> {
   }
   */
 
+  void registrar() {
+    Usuario usuario = Usuario(inputCorreo.text, inputPassword.text);
+    usuario.edad = int.parse(inputEdad.text);
+    usuario.nombre = inputNombre.text;
+
+    UsuarioService usuarioService = UsuarioService();
+    try {
+      usuarioService.registrar(context, usuario);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

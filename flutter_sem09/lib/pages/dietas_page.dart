@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_sem09/models/dieta.dart';
 import 'package:flutter_sem09/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 

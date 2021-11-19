@@ -26,7 +26,6 @@ class UsuarioService {
 
         var sesion = SesionSingleton();
         sesion.id = user['id'];
-        print(sesion.id);
 
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const MyStatefulWidget()));
@@ -36,8 +35,8 @@ class UsuarioService {
     }
   }
 
-  Future cargarDatosUsuario(BuildContext context, TextEditingController nombre,
-      TextEditingController correo) async {
+  Future cargarDatosUsuario(
+      TextEditingController nombre, TextEditingController correo) async {
     final response;
 
     try {
@@ -49,8 +48,37 @@ class UsuarioService {
       if (user.isEmpty) {
         print("Hola");
       } else {
+        print(user.toString());
         print(user['correo']);
         nombre.text = user['correo'];
+      }
+      Usuario user2 = Usuario(user['correo'], user['id'].toString());
+      return user2;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future registrar(BuildContext context, Usuario usuario) async {
+    final response;
+
+    try {
+      response = await http
+          .post(Uri.parse(UtilityAPI.API_URL + "usuarios/authFlutter"), body: {
+        "email": usuario.email,
+        "password": usuario.password,
+        "nombre": usuario.nombre,
+        "sexo": 'true',
+        "edad": usuario.edad.toString(),
+        "fechanacimiento": "2000-12-12"
+      });
+
+      Map<String, dynamic> user = json.decode(response.body);
+
+      if (user.isEmpty) {
+        print("Hola");
+      } else {
+        print(user.toString());
       }
     } catch (e) {
       print(e.toString());
