@@ -1,0 +1,23 @@
+{
+    "usuarios": [
+        
+        {
+            "correo": "roverlb@live.com",
+            "password": "rover"
+        },
+        {
+            "correo": "carloslb@live.com",
+            "password": "98777"
+        },
+        {
+            "correo": "lucy@live.com",
+            "password": "carlos"
+        },
+        {
+            "correo": "lissy@live.com",
+            "password": "1234"
+        }
+
+    ]
+
+}
